@@ -1,5 +1,5 @@
 const https = require('https');
-
+const distance = require('./distance')
 const roads = (lat, long, callback) => {
   // var lat = "43.558109";
   // var long = "-79.706352";
@@ -33,17 +33,40 @@ const roads = (lat, long, callback) => {
           roadInfo.push(JSON.parse(data).elements[i])
         }
       }
-      console.log(roadInfo[0].nodes.length)
-      for (var r=0; r<roadInfo[0].nodes.length; r++) {
-        n = 0
-        for (var n=0; n<nodes.length; n++) {
-          if (nodes[n].id === roadInfo[0].nodes[r]) {
-            console.log("ROAD: " + roadInfo[0].nodes)
-            console.log("NODE: " + nodes[n].id)
-            console.log("---------------")
-          }
+      var roadInfoUpdate = {}
+      var minDist = Number.POSITIVE_INFINITY
+      var rName = ""
+      var rNames = []
+      for (var er=0; er<roadInfo.length; er++) {
+         rName = roadInfo[er].tags.name
+        //  roadInfoUpdate["test"] += "t"
+         if (roadInfoUpdate[rName] === undefined) {
+          roadInfoUpdate[rName] = roadInfo[er].nodes
+          rNames.push(rName)
+         } else {
+          roadInfoUpdate[rName] += roadInfo[er].nodes
+         }
         }
+      console.log(rNames)
+
+    
+      for (var j=0; j<rNames.length; j++) {
+        //find closest node for each road
       }
+
+      // for (var r=0; r<roadInfo[0].nodes.length; r++) {
+      //   n = 0
+  
+      //   for (var n=0; n<nodes.length; n++) {
+      //     if (nodes[n].id === roadInfo[0].nodes[r]) {
+      //       // console.log("ROAD: " + roadInfo[0].nodes)
+      //       // console.log("NODE: " + nodes[n].lat + "," + nodes[n].lon)
+      //       minDist = Math.min(minDist,  distance([lat, long], [nodes[n].lat, nodes[n].lon]))
+      //     }
+      //   }
+      // }
+      // console.log("DISTANCE: " + minDist)
+
       callback(undefined, {
         roadInfo
         })
