@@ -33,7 +33,17 @@ const roads = (lat, long, callback) => {
           roadInfo.push(JSON.parse(data).elements[i])
         }
       }
-      // console.log(info)
+      console.log(roadInfo[0].nodes.length)
+      for (var r=0; r<roadInfo[0].nodes.length; r++) {
+        n = 0
+        for (var n=0; n<nodes.length; n++) {
+          if (nodes[n].id === roadInfo[0].nodes[r]) {
+            console.log("ROAD: " + roadInfo[0].nodes)
+            console.log("NODE: " + nodes[n].id)
+            console.log("---------------")
+          }
+        }
+      }
       callback(undefined, {
         roadInfo
         })
