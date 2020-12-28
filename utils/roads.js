@@ -23,10 +23,10 @@ const roads = (lat, long, callback) => {
     });
   
     resp.on('end', () => {
-  
+      // console.log(data)
+
       // console.log(JSON.parse(data).elements);
       for (var i=0; i<JSON.parse(data).elements.length; i++) {
-        // console.log(JSON.parse(data).elements[i])
         if (JSON.parse(data).elements[i].type == "node") {
           nodes.push(JSON.parse(data).elements[i])
         } else {
@@ -40,32 +40,45 @@ const roads = (lat, long, callback) => {
       for (var er=0; er<roadInfo.length; er++) {
          rName = roadInfo[er].tags.name
         //  roadInfoUpdate["test"] += "t"
+    
          if (roadInfoUpdate[rName] === undefined) {
           roadInfoUpdate[rName] = roadInfo[er].nodes
           rNames.push(rName)
          } else {
-          roadInfoUpdate[rName] += roadInfo[er].nodes
+           for (var each=0; each<(roadInfo[er].nodes).length; each++) {
+            roadInfoUpdate[rName].push(roadInfo[er].nodes[each])
+           }
          }
         }
-      console.log(rNames)
-
+      // console.log(roadInfoUpdate)
+      rName = ""
+      rDistance = {}
+     
+      // console.log(nodes)
     
       for (var j=0; j<rNames.length; j++) {
-        //find closest node for each road
+        rName = rNames[j]
+        // console.log(roadInfoUpdate[rName][0])
+        // roadInfoUpdate[rName] = roadInfoUpdate[rName].split(",")
+        
+        // console.log(rName)
+
+        for (var r=0; r<roadInfoUpdate[rName].length; r++) {  
+          n = 0;
+          for (var n=0; n<nodes.length; n++) {
+            // console.log("Road array: " + roadInfoUpdate[rName][r])
+            // console.log("Node array: " + nodes[n].id)
+            if (nodes[n].id === roadInfoUpdate[rName][r]) {
+              // console.log("ROAD: " + roadInfo[0].nodes)
+              minDist = Math.min(minDist,  distance([lat, long], [nodes[n].lat, nodes[n].lon]))
+            }
+          }
+        }
+        rDistance[rName] = minDist
       }
 
-      // for (var r=0; r<roadInfo[0].nodes.length; r++) {
-      //   n = 0
-  
-      //   for (var n=0; n<nodes.length; n++) {
-      //     if (nodes[n].id === roadInfo[0].nodes[r]) {
-      //       // console.log("ROAD: " + roadInfo[0].nodes)
-      //       // console.log("NODE: " + nodes[n].lat + "," + nodes[n].lon)
-      //       minDist = Math.min(minDist,  distance([lat, long], [nodes[n].lat, nodes[n].lon]))
-      //     }
-      //   }
-      // }
-      // console.log("DISTANCE: " + minDist)
+      console.log(rDistance)
+
 
       callback(undefined, {
         roadInfo

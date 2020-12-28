@@ -53,25 +53,28 @@ app.get('/noise', (req, res) => {
           if (error) {
             dataResponse.roads = error
           } else {
+            console.log("passed roads")
             dataResponse.roads = roadInfo
             construction(latitude, longitude, (error, {constructionInfo} ={}) => {
               if (error) {
                 dataResponse.construction = error
               } else {
+                console.log("passed construction")
                 dataResponse.construction = constructionInfo
-                air(latitude, longitude, (error, {nodes} ={}) => {
-                  if (error) {
-                    dataResponse.air = error
-                  } else {
-                    // console.log(airInfo)
-                    dataResponse.air = nodes
-                    res.send({
-                      roads: dataResponse.roads,
-                      construction: dataResponse.construction,
-                      air: dataResponse.air 
-                    })
-                  }
+                res.send({
+                  roads: dataResponse.roads,
+                  construction: dataResponse.construction,
+                
                 })
+                // air(latitude, longitude, (error, {nodes} ={}) => {
+                //   if (error) {
+                //     dataResponse.air = error
+                //   } else {
+                //     console.log("passed air")
+                //     dataResponse.air = nodes
+                    
+                //   }
+                // })
               }
             })
           
