@@ -1,4 +1,5 @@
 const https = require('https');
+const distance = require('./distance')
 
 const construction = (lat, long, callback) => {
   // var lat = "43.558109";
@@ -33,9 +34,32 @@ const construction = (lat, long, callback) => {
           constructionInfo.push(JSON.parse(data).elements[i])
         }
       }
-      // console.log(info)
+      var finalInfoConstruction = {}
+      var tempNodes = []
+      var temp = {}
+      var tempName = ""
+      var minDist = Number.POSITIVE_INFINITY
+
+      for (var i=0; i<constructionInfo.length; i++) {
+        minDist = Number.POSITIVE_INFINITY
+        temp = constructionInfo[i]
+        tempName = "Construction " + (i+1).toString()
+        tempNodes = constructionInfo[i].nodes
+        delete temp['nodes'];
+        finalInfoConstruction[tempName] = temp
+        for (var y=0; y<tempNodes.length; y++) {
+          for (var n=0; n<nodes.length; n++) {
+            if (nodes[n].id === tempNodes[y]) {
+              minDist = Math.min(minDist,  distance([lat, long], [nodes[n].lat, nodes[n].lon]))
+            }
+          }
+        }
+        finalInfoConstruction[tempName].shortestDistance = minDist
+      }
+
+      
       callback(undefined, {
-        constructionInfo
+        finalInfoConstruction
         })
     });
   
