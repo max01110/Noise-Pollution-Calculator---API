@@ -37,12 +37,16 @@ const roads = (lat, long, callback) => {
       var minDist = Number.POSITIVE_INFINITY
       var rName = ""
       var rNames = []
-
+      var finalInfo = {}
+      var temp = {}
       for (var er=0; er<roadInfo.length; er++) {
          rName = roadInfo[er].tags.name
          if (roadInfoUpdate[rName] === undefined) {
           roadInfoUpdate[rName] = roadInfo[er].nodes
           rNames.push(rName)
+          temp = roadInfo[er]
+          delete temp['nodes'];
+          finalInfo[rName] = temp
          } else {
            for (var each=0; each<(roadInfo[er].nodes).length; each++) {
             roadInfoUpdate[rName].push(roadInfo[er].nodes[each])
@@ -64,14 +68,16 @@ const roads = (lat, long, callback) => {
             }
           }
         }
-        rDistance[rName] = minDist
+        console.log(finalInfo[rName])
+        finalInfo[rName].shortestDistance = minDist
+        // rDistance[rName] = minDist
       }
 
-      console.log(rDistance)
+      console.log(finalInfo)
 
 
       callback(undefined, {
-        rDistance
+        finalInfo
         })
     });
   
