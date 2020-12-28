@@ -1,7 +1,2 @@
-var a = [ 739433008, 739433041 ]
-var b = [ 739432947, 3700347302, 739433084, 2828155443, 449352855 ]  
-
-var c = [855]
-var d = 098809
-c.push(d)
-console.log(c)
+const distance = require("./utils/distance")
+console.log(distance([43.557955, -79.706737], [43.5587454, -79.7067126]))

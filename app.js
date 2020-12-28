@@ -49,12 +49,12 @@ app.get('/noise', (req, res) => {
       if (error) {
           return res.send({error})
       } else {
-        roads(latitude, longitude, (error, {roadInfo} ={}) => {
+        roads(latitude, longitude, (error, {rDistance} ={}) => {
           if (error) {
             dataResponse.roads = error
           } else {
             console.log("passed roads")
-            dataResponse.roads = roadInfo
+            dataResponse.roads = rDistance
             construction(latitude, longitude, (error, {constructionInfo} ={}) => {
               if (error) {
                 dataResponse.construction = error
