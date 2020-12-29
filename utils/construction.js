@@ -41,6 +41,7 @@ const construction = (lat, long, callback) => {
       var minDist = Number.POSITIVE_INFINITY
 
       for (var i=0; i<constructionInfo.length; i++) {
+        // console.log(constructionInfo[i])
         minDist = Number.POSITIVE_INFINITY
         temp = constructionInfo[i]
         tempName = "Construction " + (i+1).toString()

@@ -61,20 +61,20 @@ app.get('/noise', (req, res) => {
               } else {
                 console.log("passed construction")
                 dataResponse.construction = finalInfoConstruction
-                res.send({
-                  roads: dataResponse.roads,
-                  construction: dataResponse.construction,
-                
+      
+                air(latitude, longitude, (error, {finalInfoAir} ={}) => {
+                  if (error) {
+                    dataResponse.air = error
+                  } else {
+                    console.log("passed air")
+                    dataResponse.air = finalInfoAir
+                    res.send({
+                      roads: dataResponse.roads,
+                      construction: dataResponse.construction,
+                      air: dataResponse.air
+                    })
+                  }
                 })
-                // air(latitude, longitude, (error, {nodes} ={}) => {
-                //   if (error) {
-                //     dataResponse.air = error
-                //   } else {
-                //     console.log("passed air")
-                //     dataResponse.air = nodes
-                    
-                //   }
-                // })
               }
             })
           
