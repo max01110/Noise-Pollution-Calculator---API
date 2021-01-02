@@ -56,6 +56,8 @@ const construction = (lat, long, callback) => {
           }
         }
         finalInfoConstruction[tempName].shortestDistance = minDist
+        finalInfoConstruction[tempName].name = tempName
+        
       }
 
       

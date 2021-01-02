@@ -88,6 +88,7 @@ const air = (lat, long, callback) => {
                 tempName = "AirPoint " + (that+1).toString() 
               }
               finalInfoAir[tempName] = nodes[that]
+              finalInfoAir[tempName].name = tempName
               finalInfoAir[tempName].shortestDistance = distance([lat, long], [nodes[that].lat, nodes[that].lon])
             }
           }

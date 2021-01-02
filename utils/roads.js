@@ -70,6 +70,8 @@ const roads = (lat, long, callback) => {
         }
         // console.log(finalInfo[rName])
         finalInfo[rName].shortestDistance = minDist
+        finalInfo[rName].name = rName
+        
         // rDistance[rName] = minDist
       }
 
